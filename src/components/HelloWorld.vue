@@ -1,42 +1,54 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <GoogleLogin
+      :params="params"
+      :renderParams="renderParams"
+      :onSuccess="onSuccess"
+      :onFailure="onFailure"
+    ></GoogleLogin>
   </div>
 </template>
 
 <script>
+import GoogleLogin from "vue-google-login";
+
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
+  data() {
+    return {
+      // client_id is the only required property but you can add several more params, full list down bellow on the Auth api section
+      params: {
+        client_id:
+          "808804559474-nj825rh28bs06glpj7hm0dg5s70s9hqa.apps.googleusercontent.com",
+      },
+      // only needed if you want to render the button with the google ui
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true,
+      },
+    };
+  },
+  params: {
+    client_id:
+      "808804559474-nj825rh28bs06glpj7hm0dg5s70s9hqa.apps.googleusercontent.com",
+  },
   props: {
-    msg: String
-  }
-}
+    msg: String,
+  },
+  components: {
+    GoogleLogin,
+  },
+  methods: {
+    onSuccess(googleUser) {
+      console.log(googleUser);
+
+      // This only gets the user information: id, name, imageUrl and email
+      console.log(googleUser.getBasicProfile());
+    },
+    onFailure() {},
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
